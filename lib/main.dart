@@ -24,14 +24,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String temp = "1234";
+  String temp = "沒有資料";
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
   };
   Map<String, String> data = {
-    'Account': 'D0843837',
-    'Password': 'Vigor01695',
+    'Account': account,
+    'Password': password,
   };
   requestData() async {
     var url =

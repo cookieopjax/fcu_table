@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'main.dart';
 import 'main.dart';
+import 'main.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -51,6 +52,8 @@ class LoginPage extends StatelessWidget {
                 onPressed: () {
                   print(account);
                   print(password);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
               ),
             ),
