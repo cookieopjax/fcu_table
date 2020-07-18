@@ -6,8 +6,8 @@ import 'loginPage.dart';
 
 void main() => runApp(MyApp());
 
-String account;
-String password;
+String account = '';
+String password = '';
 
 class MyApp extends StatelessWidget {
   @override
