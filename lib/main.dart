@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String temp = "1234";
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -34,9 +35,12 @@ class _HomePageState extends State<HomePage> {
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
     Map table = jsonDecode(response.body);
-    print(table['TimetableTw'][0]['ClsName']);
+
     if (response.statusCode == 200) {
       print(response.runtimeType);
+      setState(() {
+        temp = table['TimetableTw'][1]['ClsName'];
+      });
       return response.body;
     }
     print('Connection Error!');
@@ -47,7 +51,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('測試'),
+        child: Text(temp),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check),
