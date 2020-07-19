@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<List<String>> timeTableList = [];
   bool hasRequested = false;
+  String msg = '請按下按鈕';
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -48,9 +49,14 @@ class _HomePageState extends State<HomePage> {
         timeTableList[i].add('');
       }
     }
+    print(table['Message']);
+    if (table['Message'] != 'D0843837') {
+      setState(() {
+        timeTableList[1][1] = table['Message'];
+      });
+    }
 
     if (response.statusCode == 200) {
-      print('成功！');
       setState(() {
         hasRequested = true;
         for (int indexOfJson = 0;
@@ -66,6 +72,9 @@ class _HomePageState extends State<HomePage> {
       });
       return;
     }
+    setState(() {
+      msg = '錯誤';
+    });
     print('Connection Error!');
   }
 
@@ -196,7 +205,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       return SingleChildScrollView(
         child: Center(
-          child: Text('Press the button'),
+          child: Text(msg),
         ),
       );
     }
