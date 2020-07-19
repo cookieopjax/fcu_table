@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'loginPage.dart';
 
 void main() => runApp(MyApp());
@@ -24,7 +24,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> week = ['請按右下角按鈕', '', '','','','','','','','','','','',''];
+  List<List<String>> timeTableList = [];
+  bool hasRequested = false;
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -33,31 +34,39 @@ class _HomePageState extends State<HomePage> {
     'Account': account,
     'Password': password,
   };
-  requestData() async {
+  void requestData() async {
     var url =
         "https://service206-sds.fcu.edu.tw/mobileservice/CourseService.svc/Timetable2";
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
     Map table = jsonDecode(response.body);
 
+    //INITIALIZE
+    for (int i = 0; i < 6; i++) {
+      timeTableList.add([]);
+      for (int j = 0; j < 11; j++) {
+        timeTableList[i].add('');
+      }
+    }
+
     if (response.statusCode == 200) {
-      print(response.runtimeType);
-      print(table['TimetableTw'].length);
-      int counter = 1;
+      print('成功！');
       setState(() {
-        for(int i=0;i<41;i++){
-          if(table['TimetableTw'][i]['SctWeek']==1){
-            if(table['TimetableTw'][i]['SctPeriod'] != table['TimetableTw'][i-1]['SctPeriod']) {
-              week[counter] = table['TimetableTw'][i]['SubName'];
-              counter++;
-            }
+        hasRequested = true;
+        for (int indexOfJson = 0;
+            indexOfJson < table['TimetableTw'].length;
+            indexOfJson++) {
+          if (table['TimetableTw'][indexOfJson]['SctWeek'] > 0 &&
+              table['TimetableTw'][indexOfJson]['SctWeek'] <= 10) {
+            timeTableList[table['TimetableTw'][indexOfJson]['SctWeek']]
+                    [table['TimetableTw'][indexOfJson]['SctPeriod']] =
+                table['TimetableTw'][indexOfJson]['SubName'];
           }
         }
       });
-      return response.body;
+      return;
     }
     print('Connection Error!');
-    return '<html>error! status:${response.statusCode}</html>';
   }
 
   @override
@@ -66,39 +75,35 @@ class _HomePageState extends State<HomePage> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title:Text('逢甲課表'),
+          title: Text('逢甲課表'),
           centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
-              Tab(text:"禮拜一",),
-              Tab(text:"禮拜二",),
-              Tab(text:"禮拜三",),
-              Tab(text:"禮拜四",),
-              Tab(text:"禮拜五",),
+              Tab(
+                text: "禮拜一",
+              ),
+              Tab(
+                text: "禮拜二",
+              ),
+              Tab(
+                text: "禮拜三",
+              ),
+              Tab(
+                text: "禮拜四",
+              ),
+              Tab(
+                text: "禮拜五",
+              ),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text(week[0]),
-                Text(week[1]),
-                Text(week[2]),
-                Text(week[3]),
-                Text(week[4]),
-                Text(week[5]),
-                Text(week[6]),
-                Text(week[7]),
-                Text(week[8]),
-                Text(week[9]),
-                Text(week[10]),
-              ],
-            ),
-            Text('2'),
-            Text('3'),
-            Text('4'),
-            Text('5'),
+            buildDayTable(1),
+            buildDayTable(2),
+            buildDayTable(3),
+            buildDayTable(4),
+            buildDayTable(5),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -107,5 +112,93 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  SingleChildScrollView buildDayTable(int dayIndex) {
+    if (hasRequested) {
+      return SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              color: Colors.lightBlue[50],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][1] == null
+                  ? ' '
+                  : timeTableList[dayIndex][1]),
+            ),
+            Container(
+              color: Colors.lightBlue[100],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][2] == null
+                  ? ' '
+                  : timeTableList[dayIndex][2]),
+            ),
+            Container(
+              color: Colors.lightBlue[200],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][3] == null
+                  ? ' '
+                  : timeTableList[dayIndex][3]),
+            ),
+            Container(
+              color: Colors.lightBlue[300],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][4] == null
+                  ? ' '
+                  : timeTableList[dayIndex][4]),
+            ),
+            Container(
+              color: Colors.lightBlue[400],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][5] == null
+                  ? ' '
+                  : timeTableList[dayIndex][5]),
+            ),
+            Container(
+              color: Colors.lightBlue[500],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][6] == null
+                  ? ' '
+                  : timeTableList[dayIndex][6]),
+            ),
+            Container(
+              color: Colors.lightBlue[600],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][7] == null
+                  ? ' '
+                  : timeTableList[dayIndex][7]),
+            ),
+            Container(
+              color: Colors.lightBlue[700],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][8] == null
+                  ? ' '
+                  : timeTableList[dayIndex][8]),
+            ),
+            Container(
+              color: Colors.lightBlue[800],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][9] == null
+                  ? ' '
+                  : timeTableList[dayIndex][9]),
+            ),
+            Container(
+              color: Colors.lightBlue[900],
+              height: 100.0,
+              child: Text(timeTableList[dayIndex][10] == null
+                  ? ' '
+                  : timeTableList[dayIndex][10]),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return SingleChildScrollView(
+        child: Center(
+          child: Text('Press the button'),
+        ),
+      );
+    }
   }
 }
