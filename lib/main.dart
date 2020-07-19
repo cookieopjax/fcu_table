@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String temp = "沒有資料";
+  String temp = "請按右下方按鈕新增資料";
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       print(response.runtimeType);
       setState(() {
-        temp = table['TimetableTw'][1]['ClsName'];
+        temp = table['TimetableTw'][5]['SubName'];
       });
       return response.body;
     }
@@ -53,13 +53,45 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(temp),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.check),
-        onPressed: requestData,
+    return DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        appBar: AppBar(
+          title:Text('逢甲課表'),
+          centerTitle: true,
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(
+                text:"禮拜一",
+              ),
+              Tab(
+                text:"禮拜二",
+              ),
+              Tab(
+                text:"禮拜三",
+              ),
+              Tab(
+                text:"禮拜四",
+              ),
+              Tab(
+                text:"禮拜五",
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            Text(temp),
+            Text('2'),
+            Text('3'),
+            Text('4'),
+            Text('5'),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.check),
+          onPressed: requestData,
+        ),
       ),
     );
   }
