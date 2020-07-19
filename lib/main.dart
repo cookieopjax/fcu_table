@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String temp = "請按右下方按鈕新增資料";
+  List<String> temp = ['請按右下方按鈕', '', '','','','','','','',''];
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       print(response.runtimeType);
       setState(() {
-        temp = table['TimetableTw'][5]['SubName'];
+        temp[0] = table['TimetableTw'][5]['SubName'];
       });
       return response.body;
     }
@@ -61,27 +61,17 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
-              Tab(
-                text:"禮拜一",
-              ),
-              Tab(
-                text:"禮拜二",
-              ),
-              Tab(
-                text:"禮拜三",
-              ),
-              Tab(
-                text:"禮拜四",
-              ),
-              Tab(
-                text:"禮拜五",
-              ),
+              Tab(text:"禮拜一",),
+              Tab(text:"禮拜二",),
+              Tab(text:"禮拜三",),
+              Tab(text:"禮拜四",),
+              Tab(text:"禮拜五",),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-            Text(temp),
+            Text(temp[0]),
             Text('2'),
             Text('3'),
             Text('4'),
