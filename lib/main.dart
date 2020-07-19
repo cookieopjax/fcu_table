@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> temp = ['請按右下方按鈕', '', '','','','','','','',''];
+  List<String> week = ['請按右下角按鈕', '', '','','','','','','','','','','',''];
   Map<String, String> header = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -42,8 +42,17 @@ class _HomePageState extends State<HomePage> {
 
     if (response.statusCode == 200) {
       print(response.runtimeType);
+      print(table['TimetableTw'].length);
+      int counter = 1;
       setState(() {
-        temp[0] = table['TimetableTw'][5]['SubName'];
+        for(int i=0;i<41;i++){
+          if(table['TimetableTw'][i]['SctWeek']==1){
+            if(table['TimetableTw'][i]['SctPeriod'] != table['TimetableTw'][i-1]['SctPeriod']) {
+              week[counter] = table['TimetableTw'][i]['SubName'];
+              counter++;
+            }
+          }
+        }
       });
       return response.body;
     }
@@ -71,7 +80,21 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: <Widget>[
-            Text(temp[0]),
+            Column(
+              children: <Widget>[
+                Text(week[0]),
+                Text(week[1]),
+                Text(week[2]),
+                Text(week[3]),
+                Text(week[4]),
+                Text(week[5]),
+                Text(week[6]),
+                Text(week[7]),
+                Text(week[8]),
+                Text(week[9]),
+                Text(week[10]),
+              ],
+            ),
             Text('2'),
             Text('3'),
             Text('4'),
