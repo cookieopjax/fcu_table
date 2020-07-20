@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   bool hasRequested = false;
   String msg = '請按下按鈕';
   Map<String, String> header = {
-    'Content-type': 'application/json',
+    'Content-type': 'text/json',
     'Accept': 'application/json',
   };
   Map<String, String> data = {
@@ -36,12 +36,23 @@ class _HomePageState extends State<HomePage> {
     'Password': password,
   };
   void requestData() async {
+    setState(() {
+      msg = '初始運行中';
+    });
     var url =
         "https://service206-sds.fcu.edu.tw/mobileservice/CourseService.svc/Timetable2";
+    setState(() {
+      msg = '網址編入完成';
+    });
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
+    setState(() {
+      msg = '回應編入完成';
+    });
     Map table = jsonDecode(response.body);
-
+    setState(() {
+      msg = '檔案編入完成';
+    });
     //INITIALIZE
     for (int i = 0; i < 6; i++) {
       timeTableList.add([]);
@@ -69,6 +80,9 @@ class _HomePageState extends State<HomePage> {
                 table['TimetableTw'][indexOfJson]['SubName'];
           }
         }
+      });
+      setState(() {
+        msg = '檔案整理完成';
       });
       return;
     }
