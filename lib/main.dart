@@ -36,23 +36,13 @@ class _HomePageState extends State<HomePage> {
     'Password': password,
   };
   void requestData() async {
-    setState(() {
-      msg = '初始運行中';
-    });
     var url =
         "https://service206-sds.fcu.edu.tw/mobileservice/CourseService.svc/Timetable2";
-    setState(() {
-      msg = '網址編入完成';
-    });
+
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
-    setState(() {
-      msg = '回應編入完成';
-    });
     Map table = jsonDecode(response.body);
-    setState(() {
-      msg = '檔案編入完成';
-    });
+
     //INITIALIZE
     for (int i = 0; i < 6; i++) {
       timeTableList.add([]);
@@ -60,6 +50,7 @@ class _HomePageState extends State<HomePage> {
         timeTableList[i].add('');
       }
     }
+
     print(table['Message']);
     if (table['Message'] != 'D0843837') {
       setState(() {
@@ -81,14 +72,8 @@ class _HomePageState extends State<HomePage> {
           }
         }
       });
-      setState(() {
-        msg = '檔案整理完成';
-      });
       return;
     }
-    setState(() {
-      msg = '錯誤';
-    });
     print('Connection Error!');
   }
 
@@ -130,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.check),
+          child: Icon(Icons.autorenew),
           onPressed: requestData,
         ),
       ),
@@ -143,83 +128,169 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
+            Card(
               color: Colors.lightBlue[50],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][1] == null
-                  ? ' '
-                  : timeTableList[dayIndex][1]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][1] == null
+                    ? ' '
+                    : timeTableList[dayIndex][1],
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      letterSpacing: 2.0,
+                    ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[100],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][2] == null
-                  ? ' '
-                  : timeTableList[dayIndex][2]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][2] == null
+                    ? ' '
+                    : timeTableList[dayIndex][2],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[200],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][3] == null
-                  ? ' '
-                  : timeTableList[dayIndex][3]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][3] == null
+                    ? ' '
+                    : timeTableList[dayIndex][3],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[300],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][4] == null
-                  ? ' '
-                  : timeTableList[dayIndex][4]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][4] == null
+                    ? ' '
+                    : timeTableList[dayIndex][4],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[400],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][5] == null
-                  ? ' '
-                  : timeTableList[dayIndex][5]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][5] == null
+                    ? ' '
+                    : timeTableList[dayIndex][5],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[500],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][6] == null
-                  ? ' '
-                  : timeTableList[dayIndex][6]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][6] == null
+                    ? ' '
+                    : timeTableList[dayIndex][6],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[600],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][7] == null
-                  ? ' '
-                  : timeTableList[dayIndex][7]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][7] == null
+                    ? ' '
+                    : timeTableList[dayIndex][7],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[700],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][8] == null
-                  ? ' '
-                  : timeTableList[dayIndex][8]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][8] == null
+                    ? ' '
+                    : timeTableList[dayIndex][8],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[800],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][9] == null
-                  ? ' '
-                  : timeTableList[dayIndex][9]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][9] == null
+                    ? ' '
+                    : timeTableList[dayIndex][9],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
-            Container(
+            Card(
               color: Colors.lightBlue[900],
-              height: 100.0,
-              child: Text(timeTableList[dayIndex][10] == null
-                  ? ' '
-                  : timeTableList[dayIndex][10]),
+              elevation: 5.0,  //设置阴影
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(timeTableList[dayIndex][10] == null
+                    ? ' '
+                    : timeTableList[dayIndex][10],
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    letterSpacing: 2.0,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       );
     } else {
+      requestData();
       return SingleChildScrollView(
         child: Center(
-          child: Text(msg),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            ),
+          ),
         ),
       );
     }

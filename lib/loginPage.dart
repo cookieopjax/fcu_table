@@ -6,7 +6,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("NID Login"),
+        title: Text("NID登入"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -59,4 +59,23 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+Future<void> showAlert(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('測試標題'),
+        content: const Text('測試內容.....'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('確定'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
