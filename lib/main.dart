@@ -4,9 +4,13 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'loginPage.dart';
 import 'TimeTables.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
 
 void main() {
   runApp(MyApp());
+  SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 }
 
 String account = '';

@@ -4,13 +4,14 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'TimeTables.dart';
-
+//登入頁面
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("NID登入"),
+        title: Text("NID登入",),
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -40,6 +41,7 @@ class LoginPage extends StatelessWidget {
                   labelText: "Password",
                   hintText: "Your NID account password or ...",
                 ),
+                obscureText: true,
               ),
             ),
             SizedBox(

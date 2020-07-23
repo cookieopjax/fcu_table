@@ -4,16 +4,16 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'loginPage.dart';
 import 'main.dart';
-
+//主課表顯示頁面
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<List<String>> timeTableList = [];
-  bool hasRequested = false;
-  String msg = '請按下按鈕';
+  List<List<String>> timeTableList = [];//真正要顯示課表的雙重list
+  bool hasRequested = false; //判斷是否讀取好課表資料
+  String msg = '請按下按鈕'; //除錯用訊息，暫無用到
   Map<String, String> header = {
     'Content-type': 'text/json',
     'Accept': 'application/json',
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
-    Map table = jsonDecode(response.body);
+    Map table = jsonDecode(response.body); //用Map型態儲存課表json資料
 
     //INITIALIZE
     for (int i = 0; i < 6; i++) {
@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     print(table['Message']);
+    //json中有個'Success'欄位，可知是否有成功登入
     if (table['Success'] == false) {
       setState(() {
         timeTableList[1][1] = table['Message'];
@@ -74,21 +75,11 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
-              Tab(
-                text: "禮拜一",
-              ),
-              Tab(
-                text: "禮拜二",
-              ),
-              Tab(
-                text: "禮拜三",
-              ),
-              Tab(
-                text: "禮拜四",
-              ),
-              Tab(
-                text: "禮拜五",
-              ),
+              Tab(text: "禮拜一",),
+              Tab(text: "禮拜二",),
+              Tab(text: "禮拜三",),
+              Tab(text: "禮拜四",),
+              Tab(text: "禮拜五",),
             ],
           ),
         ),
@@ -116,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
-              color: Colors.lightBlue[50],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -146,7 +137,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[200],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -161,7 +152,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[300],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -176,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[400],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -191,7 +182,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[500],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -206,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[600],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -221,7 +212,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[700],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -236,7 +227,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[800],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -251,7 +242,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Card(
-              color: Colors.lightBlue[900],
+              color: Colors.lightBlue[100],
               elevation: 5.0,  //设置阴影
               child: Padding(
                 padding: EdgeInsets.all(10.0),
@@ -274,7 +265,7 @@ class _HomePageState extends State<HomePage> {
         child: Center(
           child: Padding(
             padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 0.0),
-            child: CircularProgressIndicator(
+            child: CircularProgressIndicator(//讀取圈圈動畫
               valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
             ),
           ),
