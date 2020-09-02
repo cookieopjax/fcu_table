@@ -10,4 +10,4 @@
 
 |             Login                    |              class table             |
 | :----------------------------------: | :----------------------------------: |
-| ![](https://upload.cc/i1/2020/09/02/qnQP5I.png) | ![](https://upload.cc/i1/2020/09/02/2bKkem.png) |
+| ![](https://upload.cc/i1/2020/09/02/2bKkem.png) | ![](https://upload.cc/i1/2020/09/02/qnQP5I.png) |
