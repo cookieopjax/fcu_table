@@ -12,7 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<List<String>> timeTableList = [];//真正要顯示課表的雙重list
+  List<List<String>> timeTableListName = [];//真正要顯示課表課名的雙重list
+  List<List<String>> timeTableListPlace = [];//真正要顯示上課位置的雙重list
   bool hasRequested = false; //判斷是否讀取好課表資料
   String msg = '請按下按鈕'; //除錯用訊息，暫無用到
   Map<String, String> header = {
@@ -33,9 +34,11 @@ class _HomePageState extends State<HomePage> {
 
     //INITIALIZE
     for (int i = 0; i < 6; i++) {
-      timeTableList.add([]);
+      timeTableListName.add([]);
+      timeTableListPlace.add([]);
       for (int j = 0; j < 11; j++) {
-        timeTableList[i].add('');
+        timeTableListName[i].add('');
+        timeTableListPlace[i].add('');
       }
     }
 
@@ -43,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     //json中有個'Success'欄位，可知是否有成功登入
     if (table['Success'] == false) {
       setState(() {
-        timeTableList[1][1] = table['Message'];
+        timeTableListName[1][1] = table['Message'];
       });
     }
 
@@ -55,9 +58,19 @@ class _HomePageState extends State<HomePage> {
         indexOfJson++) {
           if (table['TimetableTw'][indexOfJson]['SctWeek'] > 0 &&
               table['TimetableTw'][indexOfJson]['SctWeek'] <= 10) {
-            timeTableList[table['TimetableTw'][indexOfJson]['SctWeek']]
+            timeTableListName[table['TimetableTw'][indexOfJson]['SctWeek']]
             [table['TimetableTw'][indexOfJson]['SctPeriod']] =
             table['TimetableTw'][indexOfJson]['SubName'];
+          }
+        }
+        for (int indexOfJson = 0;
+        indexOfJson < table['TimetableTw'].length;
+        indexOfJson++) {
+          if (table['TimetableTw'][indexOfJson]['SctWeek'] > 0 &&
+              table['TimetableTw'][indexOfJson]['SctWeek'] <= 10) {
+            timeTableListPlace[table['TimetableTw'][indexOfJson]['SctWeek']]
+            [table['TimetableTw'][indexOfJson]['SctPeriod']] =
+            table['TimetableTw'][indexOfJson]['RomName'];
           }
         }
       });
@@ -75,6 +88,7 @@ class _HomePageState extends State<HomePage> {
           title: Text('逢甲課表'),
           centerTitle: true,
           bottom: TabBar(
+            //unselectedLabelColor: Colors.white,
             tabs: <Widget>[
               Tab(text: "禮拜一",),
               Tab(text: "禮拜二",),
@@ -107,156 +121,58 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][1] == null
-                    ? ' '
-                    : timeTableList[dayIndex][1],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
+            for(int i=1;i<=10;i++)
+              if(timeTableListName[dayIndex][i] != '')
+                Container(
+                  child: Stack(
+                      children:[
+                        Card(
+                          semanticContainer: true,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Image.asset('assets/image/test.png'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 5,
+                          margin: EdgeInsets.all(10),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(15.0,10.0,0.0,0.0),
+                            child: Text(i.toString(), style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black12,
+                              fontSize: 42.0,
+                              letterSpacing: 2.0,
+                            ),
+                            )
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30.0,20.0,0.0,0.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(timeTableListName[dayIndex][i] == null
+                                  ? ' '
+                                  : timeTableListName[dayIndex][i],
+                                style: TextStyle(
+                                  fontSize: 27.0,
+                                  letterSpacing: 2.0,
+                                ),
+                              ),
+                              Text(timeTableListPlace[dayIndex][i] == null
+                                  ? ' '
+                                  : timeTableListPlace[dayIndex][i].substring(1),//因為原資料第一個為空格，故用substring利用移除空格
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  letterSpacing: 2.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]
                 ),
               ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][2] == null
-                    ? ' '
-                    : timeTableList[dayIndex][2],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][3] == null
-                    ? ' '
-                    : timeTableList[dayIndex][3],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][4] == null
-                    ? ' '
-                    : timeTableList[dayIndex][4],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][5] == null
-                    ? ' '
-                    : timeTableList[dayIndex][5],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][6] == null
-                    ? ' '
-                    : timeTableList[dayIndex][6],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][7] == null
-                    ? ' '
-                    : timeTableList[dayIndex][7],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][8] == null
-                    ? ' '
-                    : timeTableList[dayIndex][8],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][9] == null
-                    ? ' '
-                    : timeTableList[dayIndex][9],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.lightBlue[100],
-              elevation: 5.0,  //设置阴影
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(timeTableList[dayIndex][10] == null
-                    ? ' '
-                    : timeTableList[dayIndex][10],
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       );
@@ -276,3 +192,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
+
+/*之後做為每個教室地點對應的圖片
+Image PicSelect(String place){//所有圖片長寬皆為7:2比例
+  return image(
+
+
+  );
+}*/
