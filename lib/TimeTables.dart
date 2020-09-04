@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'loginPage.dart';
 import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 //主課表顯示頁面
 class HomePage extends StatefulWidget {
   @override
@@ -259,7 +260,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       );
-    } else {
+    }
+    else {
       requestData();
       return SingleChildScrollView(
         child: Center(

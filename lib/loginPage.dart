@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'TimeTables.dart';
 //登入頁面
-class LoginPage extends StatelessWidget {
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isVisible = false;//判斷密碼是否可視
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +40,23 @@ class LoginPage extends StatelessWidget {
                 onChanged: (pwdValue) {
                   password = pwdValue;
                 },
-                decoration: const InputDecoration(
+                decoration:InputDecoration(
                   prefixIcon: Icon(Icons.lock),
-                  suffixIcon: Icon(Icons.remove_red_eye),
+                  suffixIcon: IconButton(
+                    icon: _isVisible
+                        ? Icon(Icons.visibility_off)
+                        : Icon(Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        _isVisible = !_isVisible;
+                      });
+                    },
+                  ),
+                  // Based on passwordVisible state choose the icon
                   labelText: "Password",
                   hintText: "Your NID account password or ...",
                 ),
-                obscureText: true,
+                obscureText:  !_isVisible,
               ),
             ),
             SizedBox(
@@ -67,6 +82,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
 Future<void> showAlert(BuildContext context) {
   return showDialog<void>(
     context: context,
