@@ -1,6 +1,5 @@
-# fcutable
-
-## course table app
+# 逢甲課表
+![]https://upload.cc/i1/2020/09/06/6XEtfh.png
 
 ### 目前尚未有正式版本 所以最新開發進度皆在dev
 
@@ -12,4 +11,4 @@
 
 |             Login                    |              class table             |
 | :----------------------------------: | :----------------------------------: |
-| ![](https://upload.cc/i1/2020/09/02/2bKkem.png) | ![](https://upload.cc/i1/2020/09/02/qnQP5I.png) |
+| ![](https://upload.cc/i1/2020/09/06/ifVlu8.png) | ![](https://upload.cc/i1/2020/09/06/DGvkRI.png) |
