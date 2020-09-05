@@ -14,6 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'NotoSansTC',
+        primaryColor: Colors.indigo,
+      ),
       debugShowCheckedModeBanner: false,
       home: Authentication(),
       routes: {

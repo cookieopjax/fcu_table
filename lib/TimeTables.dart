@@ -84,18 +84,18 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+        backgroundColor: Colors.indigo[50],
         appBar: AppBar(
           title: Text('逢甲課表'),
-          centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.refresh),
+              icon: Image.asset('assets/image/refresh.png',width: 18,),
               onPressed: () {
                 setState(() {});
               },
             ),
             IconButton(
-              icon: Icon(Icons.power_settings_new),
+              icon: Image.asset('assets/image/logout.png',width: 18,),
               onPressed: () {
                 _logoutUser();
                 Navigator.pushReplacementNamed(context, '/login');
@@ -149,7 +149,10 @@ class _HomePageState extends State<HomePage> {
               }
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo),
+                  strokeWidth: 1.6,
+                ),
               );
             }
           },
@@ -175,21 +178,22 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 5,
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(7),
                   ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                  Positioned(
+                      top:5,
+                      right: 25,
                       child: Text(
                         i.toString(),
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black12,
-                          fontSize: 42.0,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.white60,
+                          fontSize: 72.0,
                           letterSpacing: 2.0,
                         ),
                       )),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(30.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(20.0, 28.0, 0.0, 0.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
