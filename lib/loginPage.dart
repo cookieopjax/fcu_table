@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
-import 'package:flutter/cupertino.dart';
-import 'TimeTables.dart';
-//登入頁面
+import 'package:shared_preferences/shared_preferences.dart';
 
+//登入頁面
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -11,6 +9,15 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isVisible = false;//判斷密碼是否可視
+  String account;
+  String password;
+
+  Future<void> _loginUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('Account', account);
+    await prefs.setString('Password', password);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +74,11 @@ class _LoginPageState extends State<LoginPage> {
               height: 48.0,
               child: RaisedButton(
                 child: Text("Login"),
-                onPressed: () {
+                onPressed: () async{
                   print(account);
                   print(password);
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  await _loginUser();
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
               ),
             ),

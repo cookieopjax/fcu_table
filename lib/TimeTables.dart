@@ -20,18 +20,27 @@ class _HomePageState extends State<HomePage> {
     'Content-type': 'text/json',
     'Accept': 'application/json',
   };
-  Map<String, String> data = {
-    'Account': account,
-    'Password': password,
-  };
+  Future<void> _logoutUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('Account');
+    prefs.remove('Password');
+  }
+
   void requestData() async {
+    print('1');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String> data = {
+    'Account':prefs.getString('Account'),
+    'Password':prefs.getString('Password') ,
+    };
+
     var url =
         "https://service206-sds.fcu.edu.tw/mobileservice/CourseService.svc/Timetable2";
 
     var response = await post(url,
         headers: header, body: json.encode(data), encoding: utf8);
     Map table = jsonDecode(response.body); //用Map型態儲存課表json資料
-
+    print('2');
     //INITIALIZE
     for (int i = 0; i < 6; i++) {
       timeTableListName.add([]);
@@ -49,9 +58,13 @@ class _HomePageState extends State<HomePage> {
         timeTableListName[1][1] = table['Message'];
       });
     }
+    print('3');
 
     if (response.statusCode == 200) {
       setState(() {
+        print('kkk');
+        print(table['TimetableTw'].length);
+        print('kkkpig');
         hasRequested = true;
         for (int indexOfJson = 0;
         indexOfJson < table['TimetableTw'].length;
@@ -63,6 +76,7 @@ class _HomePageState extends State<HomePage> {
             table['TimetableTw'][indexOfJson]['SubName'];
           }
         }
+        print('kkk2');
         for (int indexOfJson = 0;
         indexOfJson < table['TimetableTw'].length;
         indexOfJson++) {
@@ -73,10 +87,13 @@ class _HomePageState extends State<HomePage> {
             table['TimetableTw'][indexOfJson]['RomName'];
           }
         }
+        print('kkk3');
       });
+      print('4');
       return;
     }
     print('Connection Error!');
+    print('5');
   }
 
   @override
@@ -87,9 +104,17 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text('逢甲課表'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.power_settings_new),
+              onPressed: (){
+                _logoutUser();
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
           bottom: TabBar(
-            //unselectedLabelColor: Colors.white,
-            tabs: <Widget>[
+            tabs: [
               Tab(text: "禮拜一",),
               Tab(text: "禮拜二",),
               Tab(text: "禮拜三",),
